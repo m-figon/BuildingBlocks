@@ -1,0 +1,66 @@
+.nav-bar {
+    background-color: #5b6467;
+    background-image: linear-gradient(315deg, #5b6467 0%, #8b939a 74%);
+    display: grid;
+    grid-template-areas: "left middle middle right right right";
+}
+
+.nav-bar h2 {
+    font-size: 3rem;
+    color: white;
+    font-weight: 300;
+    letter-spacing: 5px;
+}
+.nav-bar h1 {
+    font-weight: 300;
+    font-size: 2rem;
+    color: white;
+}
+.left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-area: left;
+    height: 4rem;
+}
+.middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-area: middle;
+    height: 4rem;
+}
+.middle select,
+button {
+    font-size: 1rem;
+    font-family: "Lato", sans-serif;
+    border: 1px solid rgba(29, 206, 190, 0.3);
+    padding-left: 5px;
+    border-radius: 5px;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+}
+button {
+    background-color: #1dcebe;
+    color: white;
+}
+button:hover {
+    background-color: #4de9e9;
+    cursor: pointer;
+}
+.right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-area: right;
+    height: 4rem;
+}
+.right h1 {
+    margin-right: 2rem;
+}
+.machines {
+    margin-right: 1rem;
+}
+.others {
+    margin-right: 1rem;
+}

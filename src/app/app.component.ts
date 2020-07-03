@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'building-blocks-assessment';
+  machine: string = "machine";
+  day: string = "day";
+  month: string = "month";
+  year: string = "year";
+  arrayThree(n: number, startFrom: number): number[] {
+    return [...Array(n).keys()].map(i => i + startFrom);
+  }
 }
