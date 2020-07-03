@@ -1,4 +1,41 @@
 <div class="a">
-    <p>a works!</p>
+    <ng-container *ngIf="showFlag">
+        <div class="row" id="title">
+            <h1>Machine Statuses</h1>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Total Net Production</h1>
+            </div>
+            <div class="right">
+                <h1>3.00</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Scrap Production Percentage</h1>
+            </div>
+            <div class="right">
+            </div>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Gross Production Percentage</h1>
+            </div>
+            <div class="right">
 
+            </div>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Downtime Percentage</h1>
+            </div>
+            <div class="right">
+
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!showFlag">
+        <h1>There is no such data</h1>
+    </ng-container>
 </div>

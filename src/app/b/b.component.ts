@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class BComponent implements OnInit {
 
   constructor() { }
-
+  showFlag=true;
   ngOnInit(): void {
   }
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,11 @@ export class AppComponent {
   day: string = "day";
   month: string = "month";
   year: string = "year";
-  arrayThree(n: number, startFrom: number): number[] {
+  constructor(private appService: AppService){}
+  array(n: number, startFrom: number): number[] {
     return [...Array(n).keys()].map(i => i + startFrom);
+  }
+  searchFunc(){
+    this.appService.setSearch(this.machine,this.day,this.month,this.year);
   }
 }

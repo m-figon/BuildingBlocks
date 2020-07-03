@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { AComponent } from './a/a.component';
 import { BComponent } from './b/b.component';
 import { CComponent } from './c/c.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AComponent,
     BComponent,
-    CComponent
+    CComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

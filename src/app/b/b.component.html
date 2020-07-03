@@ -1,4 +1,65 @@
 <div class="b">
-    <p>b works!</p>
-
+    <ng-container *ngIf="showFlag">
+        <div class="row" id="title">
+            <h1>Machine Core Temperature Info</h1>
+        </div>
+        <div class="row" id="title">
+            <div class="left">
+                <h1>Time</h1>
+            </div>
+            <div class="middle">
+                <h1>Status</h1>
+            </div>
+            <div class="right">
+                <h1>Temperature</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Time</h1>
+            </div>
+            <div class="middle">
+                <h1>Status</h1>
+            </div>
+            <div class="right">
+                <h1>Temperature</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Time</h1>
+            </div>
+            <div class="middle">
+                <h1>Status</h1>
+            </div>
+            <div class="right">
+                <h1>Temperature</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Time</h1>
+            </div>
+            <div class="middle">
+                <h1>Status</h1>
+            </div>
+            <div class="right">
+                <h1>Temperature</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Time</h1>
+            </div>
+            <div class="middle">
+                <h1>Status</h1>
+            </div>
+            <div class="right">
+                <h1>Temperature</h1>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!showFlag">
+        <h1>There is no such data</h1>
+    </ng-container>
 </div>

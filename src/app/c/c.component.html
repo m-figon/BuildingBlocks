@@ -1,4 +1,33 @@
 <div class="c">
-    <p>c works!</p>
+    <ng-container *ngIf="showFlag">
+        <div class="row" id="title">
+            <h1>Machine Overall Equipment Efficiency</h1>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Performance</h1>
+            </div>
+            <div class="right">
+                <h1>3.00</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Availability</h1>
+            </div>
+            <div class="right">
+            </div>
+        </div>
+        <div class="row">
+            <div class="left">
+                <h1>Quality</h1>
+            </div>
+            <div class="right">
 
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!showFlag">
+        <h1>There is no such data</h1>
+    </ng-container>
 </div>

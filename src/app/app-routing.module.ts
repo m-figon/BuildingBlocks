@@ -4,14 +4,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { AComponent } from './a/a.component';
 import { BComponent } from './b/b.component';
 import { CComponent } from './c/c.component';
+import { HomeComponent } from './home/home.component';
+
 const routes: Routes = [
-  { path: 'A',
+  { path: '',
+    component: HomeComponent, // this is the component with the <router-outlet> in the template
+  },
+  { path: 'status',
     component: AComponent, // this is the component with the <router-outlet> in the template
   },
-  { path: 'B',
+  { path: 'core',
     component: BComponent, // this is the component with the <router-outlet> in the template
   },
-  { path: 'C',
+  { path: 'equipment',
     component: CComponent, // this is the component with the <router-outlet> in the template
   }
 ];
