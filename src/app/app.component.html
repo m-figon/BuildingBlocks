@@ -12,7 +12,7 @@
 </style>
 
 <!-- Toolbar -->
-<ng-container *ngIf="machineNames!==[]">
+<ng-container *ngIf="machineFlag">
 
 <div class="nav-bar">
   <div class="left">
@@ -74,9 +74,9 @@
   </div>
 </div>
 </ng-container>
-<ng-container *ngIf="machineNames===[]">
+<ng-container *ngIf="!machineFlag">
   <div class="loading">
-    <h1>Loading</h1>
+    <h1>LOADING</h1>
   </div>
 </ng-container>
 

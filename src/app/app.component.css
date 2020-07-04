@@ -85,8 +85,11 @@ button:hover {
     height:100vh;
     position: absolute;
     display: flex;
-    z-index: 3;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    background-color: #f0f0f0;
 }
 .loading h1{
-    font-size: 4rem;
+    font-size: 3rem;
 }

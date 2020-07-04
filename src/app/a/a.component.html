@@ -32,8 +32,11 @@
                 <h1>Downtime Percentage</h1>
             </div>
             <div class="right">
-
+                <h1>{{(downtime)/(runtime+downtime)*100 | number:'1.2'}}%</h1>
             </div>
+        </div>
+        <div class="chart-div">
+        <canvas #lineChart>{{ chart }}</canvas>
         </div>
     </ng-container>
     <ng-container *ngIf="machine && date && production<=0">

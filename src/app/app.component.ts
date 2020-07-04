@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   year: string = "";
   tmp: any[] = [];
   machineNames: string[]=[];
+  machineFlag=false;
   constructor(private http: HttpClient, private appService: AppService) { }
   array(n: number, startFrom: number): number[] {
     return [...Array(n).keys()].map(i => i + startFrom);
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit {
         }
       }
       console.log(this.machineNames);
+      this.machineFlag=true;
     })
 
 

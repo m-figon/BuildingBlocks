@@ -40,3 +40,8 @@
     justify-content: flex-end;
     padding-right: 1rem;
 }
+.chart-div{
+    margin-top:2rem;
+    height:20rem;
+    width:30rem;
+}
