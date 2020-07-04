@@ -5,18 +5,23 @@ import { Injectable } from '@angular/core';
 })
 export class AppService {
   public machine:string;
-  public day:string;
-  public month:string;
-  public year:string;
+  public date:string;
   constructor() { }
   setSearch(machineVal:string, dayVal:string, monthVal:string, yearVal:string){
-    this.machine = machineVal;
-    this.day=dayVal;
-    this.month=monthVal;
-    this.year=yearVal;
+    if(dayVal && monthVal && yearVal){
+      this.date=yearVal+"-"+monthVal+"-"+dayVal;
+    }
+    if(machineVal){
+      this.machine = machineVal;
+    }
+
+  }
+  getMachine(){
     console.log(this.machine);
-    console.log(this.day);
-    console.log(this.month);
-    console.log(this.year);
+    return this.machine;
+  }
+  getDate(){
+    console.log(this.date);
+    return this.date;
   }
 }

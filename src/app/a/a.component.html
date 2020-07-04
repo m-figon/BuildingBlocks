@@ -1,7 +1,7 @@
 <div class="a">
-    <ng-container *ngIf="showFlag">
+    <ng-container *ngIf="machine && date">
         <div class="row" id="title">
-            <h1>Machine Statuses</h1>
+            <h1>{{machine}} Statuses</h1>
         </div>
         <div class="row">
             <div class="left">
@@ -35,7 +35,13 @@
             </div>
         </div>
     </ng-container>
-    <ng-container *ngIf="!showFlag">
-        <h1>There is no such data</h1>
+    <ng-container *ngIf="!machine && date">
+        <h1>Choose machine type</h1>
+    </ng-container>
+    <ng-container *ngIf="!date && machine">
+        <h1>Choose date</h1>
+    </ng-container>
+    <ng-container *ngIf="!machine && !date">
+        <h1>Choose machine type and date</h1>
     </ng-container>
 </div>

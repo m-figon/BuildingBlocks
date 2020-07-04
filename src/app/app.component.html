@@ -8,49 +8,70 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <style>
-  
+
 </style>
 
 <!-- Toolbar -->
-  <div class="nav-bar">
-    <div class="left">
-      <a routerLink=""><h2>OGEL</h2></a>
+<div class="nav-bar">
+  <div class="left">
+    <a routerLink="">
+      <h2>OGEL</h2>
+    </a>
+  </div>
+  <div class="middle">
+    <div class="machines">
+      <select [(ngModel)]="machine">
+        <option value="">Machine</option>
+        <ng-container *ngFor="let item of machineNames">
+          <option value="{{item}}">{{item}}</option>
+        </ng-container>
+      </select>
     </div>
-    <div class="middle">
-      <div class="machines">
-        <select [(ngModel)]="machine">
-          <option value="machine">Machine</option>
-          <option value="machine2">Machine2</option>
-        </select>
-      </div>
-      <div class="others">
-        <select [(ngModel)]="day">
-          <option value="day">Day</option>
-          <ng-container *ngFor="let i of array(31, 1)">
+    <div class="others">
+      <select [(ngModel)]="day">
+        <option value="">Day</option>
+        <ng-container *ngFor="let i of array(31, 1)">
+          <ng-container *ngIf="i<10">
+            <option value="0{{i}}">0{{i}}</option>
+          </ng-container>
+          <ng-container *ngIf="i>=10">
             <option value="{{i}}">{{i}}</option>
-            </ng-container>
-        </select>
-        <select [(ngModel)]="month">
-          <option value="month">Month</option>
-          <ng-container *ngFor="let i of array(12, 1)">
+          </ng-container>
+        </ng-container>
+
+      </select>
+      <select [(ngModel)]="month">
+        <option value="">Month</option>
+        <ng-container *ngFor="let i of array(12, 1)">
+          <ng-container *ngIf="i<10">
+            <option value="0{{i}}">0{{i}}</option>
+          </ng-container>
+          <ng-container *ngIf="i>=10">
             <option value="{{i}}">{{i}}</option>
-            </ng-container>
-        </select>
-        <select [(ngModel)]="year">
-          <option value="year">Year</option>
-          <ng-container *ngFor="let i of array(21, 2000)">
-            <option value="{{i}}">{{i}}</option>
-            </ng-container>
-        </select>
-        <button (click)="searchFunc()"><img src="assets/img/search.png"></button>
-      </div>
-    </div>
-    <div class="right">
-      <a routerLink="status"><h1>Machine Statuses</h1></a>
-      <a routerLink="core"><h1>Core Temperature Info</h1></a>
-      <a routerLink="equipment"><h1>Equipment Efficiency</h1></a>
+          </ng-container>
+        </ng-container>
+      </select>
+      <select [(ngModel)]="year">
+        <option value="">Year</option>
+        <ng-container *ngFor="let i of array(21, 2000)">
+          <option value="{{i}}">{{i}}</option>
+        </ng-container>
+      </select>
+      <button (click)="searchFunc()"><img src="assets/img/search.png"></button>
     </div>
   </div>
+  <div class="right">
+    <a routerLink="status">
+      <h1>Machine Statuses</h1>
+    </a>
+    <a routerLink="core">
+      <h1>Core Temperature Info</h1>
+    </a>
+    <a routerLink="equipment">
+      <h1>Equipment Efficiency</h1>
+    </a>
+  </div>
+</div>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
