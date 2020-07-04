@@ -19,7 +19,7 @@ export class BComponent implements OnInit {
     setInterval(()=>{
       this.machine=this.appService.getMachine();
       this.date=this.appService.getDate();
-    },3000)
+    },500)
     this.http.get<any>('https://building-blocks-assessment.herokuapp.com/Production').subscribe(data => {
       console.log(data);
   })

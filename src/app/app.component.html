@@ -12,6 +12,8 @@
 </style>
 
 <!-- Toolbar -->
+<ng-container *ngIf="machineNames!==[]">
+
 <div class="nav-bar">
   <div class="left">
     <a routerLink="">
@@ -20,7 +22,7 @@
   </div>
   <div class="middle">
     <div class="machines">
-      <select [(ngModel)]="machine">
+      <select (change)="searchFunc()" [(ngModel)]="machine">
         <option value="">Machine</option>
         <ng-container *ngFor="let item of machineNames">
           <option value="{{item}}">{{item}}</option>
@@ -28,7 +30,7 @@
       </select>
     </div>
     <div class="others">
-      <select [(ngModel)]="day">
+      <select (change)="searchFunc()" [(ngModel)]="day">
         <option value="">Day</option>
         <ng-container *ngFor="let i of array(31, 1)">
           <ng-container *ngIf="i<10">
@@ -40,7 +42,7 @@
         </ng-container>
 
       </select>
-      <select [(ngModel)]="month">
+      <select (change)="searchFunc()" [(ngModel)]="month">
         <option value="">Month</option>
         <ng-container *ngFor="let i of array(12, 1)">
           <ng-container *ngIf="i<10">
@@ -51,13 +53,12 @@
           </ng-container>
         </ng-container>
       </select>
-      <select [(ngModel)]="year">
+      <select (change)="searchFunc()" [(ngModel)]="year">
         <option value="">Year</option>
         <ng-container *ngFor="let i of array(21, 2000)">
           <option value="{{i}}">{{i}}</option>
         </ng-container>
       </select>
-      <button (click)="searchFunc()"><img src="assets/img/search.png"></button>
     </div>
   </div>
   <div class="right">
@@ -72,6 +73,12 @@
     </a>
   </div>
 </div>
+</ng-container>
+<ng-container *ngIf="machineNames===[]">
+  <div class="loading">
+    <h1>Loading</h1>
+  </div>
+</ng-container>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->

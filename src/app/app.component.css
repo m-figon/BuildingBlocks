@@ -80,3 +80,13 @@ button:hover {
 .others {
     margin-right: 1rem;
 }
+.loading{
+    width:100vw;
+    height:100vh;
+    position: absolute;
+    display: flex;
+    z-index: 3;
+}
+.loading h1{
+    font-size: 4rem;
+}
