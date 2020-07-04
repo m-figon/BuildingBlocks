@@ -5,59 +5,30 @@
         </div>
         <div class="row" id="title">
             <div class="left">
-                <h1>Time</h1>
+                <h1>Start Time</h1>
             </div>
             <div class="middle">
-                <h1>Status</h1>
+                <h1>End Time</h1>
             </div>
             <div class="right">
-                <h1>Temperature</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="left">
-                <h1>Time</h1>
-            </div>
-            <div class="middle">
                 <h1>Status</h1>
             </div>
-            <div class="right">
-                <h1>Temperature</h1>
-            </div>
         </div>
-        <div class="row">
-            <div class="left">
-                <h1>Time</h1>
-            </div>
-            <div class="middle">
-                <h1>Status</h1>
-            </div>
-            <div class="right">
-                <h1>Temperature</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="left">
-                <h1>Time</h1>
-            </div>
-            <div class="middle">
-                <h1>Status</h1>
-            </div>
-            <div class="right">
-                <h1>Temperature</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="left">
-                <h1>Time</h1>
-            </div>
-            <div class="middle">
-                <h1>Status</h1>
-            </div>
-            <div class="right">
-                <h1>Temperature</h1>
-            </div>
-        </div>
+        <ng-container *ngFor="let item of coreInfo; index as i">
+            <ng-container *ngIf="i>0">
+                <div class="row">
+                    <div class="left">
+                        <h1>{{item.startTime}}</h1>
+                    </div>
+                    <div class="middle">
+                        <h1>{{item.endTime}}</h1>
+                    </div>
+                    <div class="right">
+                        <h1>{{item.status}}</h1>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
     </ng-container>
     <ng-container *ngIf="!machine && date">
         <h1>Choose machine type</h1>
