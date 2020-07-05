@@ -16,6 +16,7 @@ export class BComponent implements OnInit {
   public previousMachine:string="test";
   public previousDate: string="test";
   public coreInfo: any[]=[];
+  public boolValue=true;
   //temperature
   ngOnInit(): void {
     this.machine = this.appService.getMachine();
@@ -24,73 +25,59 @@ export class BComponent implements OnInit {
       this.machine=this.appService.getMachine();
       this.date=this.appService.getDate();
       if (this.productionContent){
-        let coreIndex=1;
+        let coreIndex=0;
         this.coreInfo[0]={
-          startTime: "test",
-          endTime: "test",
-          status: "test",
-          cores: 0
-        };
-        this.coreInfo[coreIndex]={
-          startTime: "",
-          endTime: "",
-          status: "",
+          startTime: "00:00:00",
+          endTime: "00:05:00",
+          status: "good",
           cores: 0
         };
         for (let item of this.productionContent) {
           if (item.variable_name === "CORE TEMPERATURE" && item.machine_name === this.machine && item.datetime_from.substr(0, 10) === this.date) {
-              if(item.value<=85 || (item.value>85 && item.value<=100 && this.coreInfo[coreIndex].cores<3)){
-                this.coreInfo[coreIndex].status="good";
-                if(this.coreInfo[coreIndex].status!==this.coreInfo[coreIndex-1].status){
-                  this.coreInfo[coreIndex].startTime=item.datetime_from.substr(11,);
+              if(item.value<=85){
+                if(this.coreInfo[coreIndex].status==="good"){
                   this.coreInfo[coreIndex].endTime=item.datetime_to.substr(11,);
+                }
+                else if(this.coreInfo[coreIndex].status==="warning" || this.coreInfo[coreIndex].status==="fatal"){
                   coreIndex++;
                   this.coreInfo[coreIndex]={
-                    startTime: "",
-                    endTime: "",
-                    status: "",
+                    startTime: item.datetime_from.substr(11,),
+                    endTime: item.datetime_to.substr(11,),
+                    status: "good",
                     cores: 0
                   };
-                }else if(this.coreInfo[coreIndex].status===this.coreInfo[coreIndex-1].status){
-                  this.coreInfo[coreIndex].endTime=item.datetime_to.substr(11,);
-                  this.coreInfo[coreIndex].cores++;
                 }
-              }
-              else if((item.value>85 && item.value<=100 && this.coreInfo[coreIndex].cores>=3) || (item.value>100 && this.coreInfo[coreIndex].cores<3)){
-                this.coreInfo[coreIndex].status="warning";
-                if(this.coreInfo[coreIndex].status!==this.coreInfo[coreIndex-1].status){
-                  this.coreInfo[coreIndex].startTime=item.datetime_from.substr(11,);
+              }else if(item.value>85 && item.value<=100){
+                if(this.coreInfo[coreIndex].status==="warning"){
                   this.coreInfo[coreIndex].endTime=item.datetime_to.substr(11,);
-                  coreIndex++;
+                }else if(this.coreInfo[coreIndex].status==="good"){
+                  this.coreInfo[coreIndex].cores++;
+                  if(this.coreInfo[coreIndex].cores>=3){
+                    coreIndex++;
                   this.coreInfo[coreIndex]={
-                    startTime: "",
-                    endTime: "",
-                    status: "",
+                    startTime: item.datetime_from.substr(11,),
+                    endTime: item.datetime_to.substr(11,),
+                    status: "warning",
                     cores: 0
                   };
-                }else if(this.coreInfo[coreIndex].status===this.coreInfo[coreIndex-1].status){
-                  this.coreInfo[coreIndex].endTime=item.datetime_to.substr(11,);
-                  this.coreInfo[coreIndex].cores++;
+                  }
                 }
-              }
-              else if(item.value>100 && this.coreInfo[coreIndex].cores>=3){
-                this.coreInfo[coreIndex].status="fatal";
-                if(this.coreInfo[coreIndex].status!==this.coreInfo[coreIndex-1].status){
-                  this.coreInfo[coreIndex].startTime=item.datetime_from.substr(11,);
+              }else if(item.value>100){
+                if(this.coreInfo[coreIndex].status==="fatal"){
                   this.coreInfo[coreIndex].endTime=item.datetime_to.substr(11,);
-                  coreIndex++;
+                }else if(this.coreInfo[coreIndex].status==="warning"){
+                  this.coreInfo[coreIndex].cores++;
+                  if(this.coreInfo[coreIndex].cores>=3){
+                    coreIndex++;
                   this.coreInfo[coreIndex]={
-                    startTime: "",
-                    endTime: "",
-                    status: "",
+                    startTime: item.datetime_from.substr(11,),
+                    endTime: item.datetime_to.substr(11,),
+                    status: "fatal",
                     cores: 0
                   };
-                }else if(this.coreInfo[coreIndex].status===this.coreInfo[coreIndex-1].status){
-                  this.coreInfo[coreIndex].endTime=item.datetime_to.substr(11,);
-                  this.coreInfo[coreIndex].cores++;
+                  }
                 }
               }
-          
           }
         }
         console.log(this.coreInfo);

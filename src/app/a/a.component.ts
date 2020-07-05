@@ -27,6 +27,9 @@ export class AComponent implements OnInit {
   public runtimeContent: any[];
   public previousMachine:string="test";
   public previousDate: string="test";
+  public scrapPercentage:string;
+  public grossPercentage:string;
+  public downtimePercentage:string;
   ngOnInit(): void {
     this.machine = this.appService.getMachine();
     this.date = this.appService.getDate();
@@ -88,7 +91,7 @@ export class AComponent implements OnInit {
             datasets: [
               {
                 data: this.totalArray, 
-                borderColor: 'rgb(29, 206, 190)',
+                borderColor: '#82b8ff',
                 fill: false
               }
             ]
@@ -160,6 +163,9 @@ export class AComponent implements OnInit {
 
           }
         }
+        this.downtimePercentage=(((this.downtime)/(this.runtime+this.downtime))*100).toFixed(2);
+        this.scrapPercentage=((this.scrap/this.production)*100).toFixed(2);
+        this.grossPercentage=(((this.production-this.scrap)/this.production)*100).toFixed(2);
         console.log('runtime total ' + this.runtime);
         console.log('downtime total ' + this.downtime);
         console.log('production total ' + this.production);

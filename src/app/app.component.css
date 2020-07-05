@@ -36,7 +36,7 @@
 .middle select{
     font-size: 1rem;
     font-family: "Lato", sans-serif;
-    border: 1px solid rgba(29, 206, 190, 0.3);
+    border: 1px solid #82b8ff;
     padding-left: 5px;
     border-radius: 5px;
     height: 1.5rem;
@@ -45,7 +45,7 @@
 button {
     font-size: 1rem;
     font-family: "Lato", sans-serif;
-    border: 1px solid rgba(29, 206, 190, 0.3);
+    border: 1px solid #82b8ff;
     padding-left: 5px;
     border-radius: 5px;
     width:2rem;

@@ -16,7 +16,7 @@
                 <h1>Scrap Production Percentage</h1>
             </div>
             <div class="right">
-                <h1>{{scrap/production*100 | number:'1.2'}}%</h1>
+                <h1>{{scrapPercentage}}%</h1>
             </div>
         </div>
         <div class="row">
@@ -24,7 +24,7 @@
                 <h1>Gross Production Percentage</h1>
             </div>
             <div class="right">
-                <h1>{{(production-scrap)/production*100 | number:'1.2'}}%</h1>
+                <h1>{{grossPercentage}}%</h1>
             </div>
         </div>
         <div class="row">
@@ -32,7 +32,7 @@
                 <h1>Downtime Percentage</h1>
             </div>
             <div class="right">
-                <h1>{{(downtime)/(runtime+downtime)*100 | number:'1.2'}}%</h1>
+                <h1>{{downtimePercentage}}%</h1>
             </div>
         </div>
         <div class="chart-div">

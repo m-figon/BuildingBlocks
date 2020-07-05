@@ -15,19 +15,30 @@
             </div>
         </div>
         <ng-container *ngFor="let item of coreInfo; index as i">
-            <ng-container *ngIf="i>0">
-                <div class="row">
-                    <div class="left">
-                        <h1>{{item.startTime}}</h1>
-                    </div>
-                    <div class="middle">
-                        <h1>{{item.endTime}}</h1>
-                    </div>
-                    <div class="right">
-                        <h1>{{item.status}}</h1>
-                    </div>
+            <div class="row">
+                <div class="left">
+                    <h1>{{item.startTime}}</h1>
                 </div>
-            </ng-container>
+                <div class="middle">
+                    <h1>{{item.endTime}}</h1>
+                </div>
+                <ng-container *ngIf="item.status==='good'">
+                    <div class="right">
+                        <h1 [style.color]="item.status==='good' ? '#27d96b' : ''">{{item.status}}</h1>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="item.status==='warning'">
+                    <div class="right">
+                        <h1 [style.color]="item.status==='warning' ? '#db9f27' : ''">{{item.status}}</h1>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="item.status==='fatal'">
+                    <div class="right">
+                        <h1 [style.color]="item.status==='fatal' ? '#d43a26' : ''">{{item.status}}</h1>
+                    </div>
+                </ng-container>
+            </div>
+            
         </ng-container>
     </ng-container>
     <ng-container *ngIf="!machine && date">
