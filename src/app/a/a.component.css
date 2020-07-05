@@ -42,7 +42,7 @@
 }
 .chart-div{
     margin-top:2rem;
-    height:20rem;
+    height:30rem;
     width:30rem;
 }
 .loading{
@@ -60,4 +60,16 @@
 .loading img{
     height:1rem;
     width:1rem;
+}
+@media screen and (max-width: 650px) {
+    .row{
+        width:20rem;
+    }
+    .a h1{
+        font-size: 0.7rem;
+    }
+    .chart-div{
+        width: 20rem;
+        height: 20rem;
+    }
 }

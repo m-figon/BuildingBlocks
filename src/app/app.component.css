@@ -94,3 +94,53 @@ button:hover {
     height:1rem;
     width:1rem;
 }
+@media screen and (max-width: 1250px) {
+    .nav-bar h2{
+        font-size: 2rem;
+    }
+    .machines,.others{
+        margin-right: 0.5rem;
+    }
+  .right h1{
+      font-size: 1rem;
+      margin-right: 1rem;
+  }
+  .middle select{
+      font-size: 0.8rem;
+      margin-right: 0.2rem;
+  }
+}
+@media screen and (max-width: 950px) {
+    .nav-bar h2{
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    .machines,.others{
+        margin-right: 0.2rem;
+    }
+  .right h1{
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+  }
+  .middle select{
+      font-size: 0.6rem;
+      margin-right: 0.2rem;
+      height: 1rem;
+  }
+}
+@media screen and (max-width: 450px) {
+    .nav-bar h2{
+        display: none;
+    }
+    .machines,.others{
+        margin-right: 0.1rem;
+    }
+  .right h1{
+      font-size: 0.7rem;
+      margin-right: 0.3rem;
+  }
+  .middle select{
+      font-size: 0.6rem;
+      margin-right: 0.1rem;
+  }
+}
