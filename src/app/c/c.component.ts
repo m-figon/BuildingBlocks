@@ -25,6 +25,8 @@ export class CComponent implements OnInit {
   public availability: string;
   public quality: string;
   public oee: string;
+  public loadingFlag:boolean=true;
+
   //production and uptime
   ngOnInit(): void {
     this.machine = this.appService.getMachine();
@@ -103,6 +105,7 @@ export class CComponent implements OnInit {
         console.log('downtime total ' + this.downtime);
         console.log('production total ' + this.production);
         console.log('scrap total ' + this.scrap);
+        this.loadingFlag=false;
 
       }
       this.previousMachine=this.machine;

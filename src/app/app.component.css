@@ -90,6 +90,7 @@ button:hover {
     z-index: 4;
     background-color: #f0f0f0;
 }
-.loading h1{
-    font-size: 3rem;
+.loading img{
+    height:1rem;
+    width:1rem;
 }

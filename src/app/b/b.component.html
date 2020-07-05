@@ -1,5 +1,5 @@
 <div class="b">
-    <ng-container *ngIf="machine && date">
+    <ng-container *ngIf="machine && date && coreInfo.length>1">
         <div class="row" id="title">
             <h1>{{machine}} Core Temperature Info</h1>
         </div>
@@ -41,6 +41,9 @@
             
         </ng-container>
     </ng-container>
+    <ng-container *ngIf="machine && date && coreInfo.length<=1">
+        <h1>No data for such date and machine configuration</h1>
+    </ng-container>
     <ng-container *ngIf="!machine && date">
         <h1>Choose machine type</h1>
     </ng-container>
@@ -51,3 +54,8 @@
         <h1>Choose machine type and date</h1>
     </ng-container>
 </div>
+<ng-container *ngIf="loadingFlag && machine && date">
+    <div class="loading">
+      <img src="assets/img/loading.gif">
+    </div>
+  </ng-container>

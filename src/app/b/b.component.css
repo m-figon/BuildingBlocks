@@ -48,3 +48,19 @@
     justify-content: center;
     padding-right: 1rem;
 }
+.loading{
+    width:100vw;
+    height:100vh;
+    top:0;
+    left:0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    background-color: #f0f0f0;
+}
+.loading img{
+    height:1rem;
+    width:1rem;
+}

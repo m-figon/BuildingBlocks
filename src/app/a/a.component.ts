@@ -30,12 +30,14 @@ export class AComponent implements OnInit {
   public scrapPercentage:string;
   public grossPercentage:string;
   public downtimePercentage:string;
+  public loadingFlag:boolean=true;
   ngOnInit(): void {
     this.machine = this.appService.getMachine();
     this.date = this.appService.getDate();
     setInterval(() => {
       this.machine = this.appService.getMachine();
       this.date = this.appService.getDate();
+      this.loadingFlag=false;
       if (this.productionContent && (this.previousMachine!==this.machine || this.previousDate!==this.date)) {
         this.production = 0;
         this.scrap = 0;
@@ -171,7 +173,6 @@ export class AComponent implements OnInit {
         console.log('production total ' + this.production);
         console.log('scrap total ' + this.scrap);
         console.log('total array ' + this.totalArray);
-
       }
       this.previousMachine=this.machine;
         this.previousDate=this.date;

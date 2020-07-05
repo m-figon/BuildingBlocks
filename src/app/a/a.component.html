@@ -1,5 +1,5 @@
 <div class="a">
-    <ng-container *ngIf="machine && date && production>0">
+    <ng-container *ngIf="machine && date && production!==0">
         <div class="row" id="title">
             <h1>{{machine}} Statuses</h1>
         </div>
@@ -39,7 +39,7 @@
         <canvas #lineChart>{{ chart }}</canvas>
         </div>
     </ng-container>
-    <ng-container *ngIf="machine && date && production<=0">
+    <ng-container *ngIf="!loadingFlag && machine && date && production===0">
         <h1>No data for such date and machine configuration</h1>
     </ng-container>
     <ng-container *ngIf="!machine && date">
@@ -52,3 +52,8 @@
         <h1>Choose machine type and date</h1>
     </ng-container>
 </div>
+<ng-container *ngIf="loadingFlag && machine && date && production===0">
+    <div class="loading">
+      <img src="assets/img/loading.gif">
+    </div>
+  </ng-container>

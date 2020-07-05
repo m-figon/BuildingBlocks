@@ -17,6 +17,8 @@ export class BComponent implements OnInit {
   public previousDate: string="test";
   public coreInfo: any[]=[];
   public boolValue=true;
+  public loadingFlag:boolean=true;
+
   //temperature
   ngOnInit(): void {
     this.machine = this.appService.getMachine();
@@ -81,6 +83,7 @@ export class BComponent implements OnInit {
           }
         }
         console.log(this.coreInfo);
+        this.loadingFlag=false;
       }
     },500)
     this.http.get<any>('https://building-blocks-assessment.herokuapp.com/Production').subscribe(data => {
