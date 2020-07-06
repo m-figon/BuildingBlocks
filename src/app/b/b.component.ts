@@ -12,11 +12,10 @@ export class BComponent implements OnInit {
   constructor(private http: HttpClient, private appService: AppService) { }
   public machine: string;
   public date: string;
-  public productionContent: any[];
-  public previousMachine: string = "test";
-  public previousDate: string = "test";
+  private productionContent: any[];
+  private previousMachine: string = "test";
+  private previousDate: string = "test";
   public coreInfo: any[] = [];
-  public boolValue = true;
   public loadingFlag: boolean = true;
 
   //temperature
