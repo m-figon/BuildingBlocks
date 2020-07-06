@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     return [...Array(n).keys()].map(i => i + startFrom);
   }
   ngOnInit(): void {
-    this.http.get<any>('https://building-blocks-assessment.herokuapp.com/Production').subscribe(data => {
+    this.http.get<any>('https://building-blocks-backend.herokuapp.com/Production').subscribe(data => {
       this.tmp = data.slice();
       console.log(this.tmp);
       for(let item of this.tmp){
@@ -39,8 +39,6 @@ export class AppComponent implements OnInit {
       console.log(this.machineNames);
       this.machineFlag=true;
     })
-
-
   }
 
   searchFunc() {

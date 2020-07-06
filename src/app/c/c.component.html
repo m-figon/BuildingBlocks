@@ -1,5 +1,5 @@
 <div class="c">
-    <ng-container *ngIf="machine && date && production>0">
+    <ng-container *ngIf="machine && date && grossProduction>0">
         <div class="row" id="title">
             <h1>{{machine}} Overall Equipment Efficiency</h1>
         </div>
@@ -36,7 +36,7 @@
             </div>
         </div>
     </ng-container>
-    <ng-container *ngIf="machine && date && production<=0">
+    <ng-container *ngIf="machine && date && grossProduction<=0">
         <h1>No data for such date and machine configuration</h1>
     </ng-container>
     <ng-container *ngIf="!machine && date">

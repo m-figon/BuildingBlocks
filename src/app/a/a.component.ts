@@ -11,7 +11,7 @@ import { Chart } from 'chart.js';
   styleUrls: ['./a.component.css']
 })
 export class AComponent implements OnInit {
-  @ViewChild('lineChart') private chartRef;
+  @ViewChild('lineChart') private chartRef: any;
   chart: any;
   constructor(private http: HttpClient, private appService: AppService) { }
   public machine: string;
@@ -39,18 +39,18 @@ export class AComponent implements OnInit {
     this.date = this.appService.getDate();
   }
   arraysInit(): void { //getting data from server
-    this.http.get<any>('https://building-blocks-assessment.herokuapp.com/Production').subscribe(data => { //from Ogel.Production.csv converted to OgelProduction.json
+    this.http.get<any>('https://building-blocks-backend.herokuapp.com/Production').subscribe(data => { //from Ogel.Production.csv converted to OgelProduction.json
       this.productionContent = data.slice();
     })
-    this.http.get<any>('https://building-blocks-assessment.herokuapp.com/Runtime').subscribe(data => { //from Ogel.Runtime.csv converted to OgelRuntime.json
+    this.http.get<any>('https://building-blocks-backend.herokuapp.com/Runtime').subscribe(data => { //from Ogel.Runtime.csv converted to OgelRuntime.json
       this.runtimeContent = data.slice();
     })
   }
-  scrapAndProductionSum(): void {//calculating gross production and scrap sum (A part 1,2)
+  scrapAndProductionSum(): void {//calculating gross production and scrap sum 
     if (this.productionContent && (this.previousMachine !== this.machine || this.previousDate !== this.date)) {
       this.grossProduction = 0;
       this.scrapProduction = 0;
-      for (let item of this.productionContent) {
+      for (let item of this.productionContent) { //loop of every object of productionContent array
         if (item.machine_name === this.machine && item.datetime_from.substr(0, 10) === this.date) {
           if (item.variable_name === "PRODUCTION") {
             this.grossProduction += parseInt(item.value);
@@ -62,7 +62,7 @@ export class AComponent implements OnInit {
       }
     }
   }
-  currentMinusLastDate(curr: string, last: string): string {
+  currentMinusLastDate(curr: string, last: string): string { //time difference between two dates as a string
     let now = moment(curr);
     let then = moment(last);
     let ms = moment(now, "YYYY-MM-DD HH:mm:ss").diff(moment(then, "YYYY-MM-DD HH:mm:ss"));
@@ -81,7 +81,7 @@ export class AComponent implements OnInit {
       this.seconds = s.substr(6, 1);
     }
   }
-  runOrDownTimeSum(type:string):void {
+  runOrDownTimeSum(type:string):void { // add values to runtime or downtime
     if (type === 'runtime') {
       this.runtime += (60 * parseInt(this.hours));
       this.runtime += parseInt(this.minutes);
@@ -96,13 +96,11 @@ export class AComponent implements OnInit {
     if (this.runtimeContent && (this.previousMachine !== this.machine || this.previousDate !== this.date)) {
       this.runtime = 0;
       this.downtime = 0;
-      let currentDate;
-      let lastDate = "01/01/2018 00:00:00";
-      let lastOne;
-      let lastZero;
-      for (let item of this.runtimeContent) {
+      let currentDate:string, lastOne:string, lastZero:string;
+      let lastDate: string = "01/01/2018 00:00:00";
+      for (let item of this.runtimeContent) { //loop of every object of runtimeContent array
         if (item.machine_name === this.machine && item.datetime.substr(0, 10) === this.date) {
-          if (item.isrunning === "1") {
+          if (item.isrunning === "1") { //if current status is running calculate difference from previous one and sum it to downtime
             currentDate = "01/01/2018 " + item.datetime.substr(11,);
             lastOne = currentDate;
             let s = this.currentMinusLastDate(currentDate, lastDate);
@@ -110,7 +108,7 @@ export class AComponent implements OnInit {
             this.runOrDownTimeSum('downtime');
             lastDate = currentDate;
           }
-          if (item.isrunning === "0") {
+          if (item.isrunning === "0") { //if current status is not running calculate difference from previous one and sum it to runtime
             currentDate = "01/01/2018 " + item.datetime.substr(11,);
             lastZero = currentDate;
             let s = this.currentMinusLastDate(currentDate, lastDate);
@@ -121,33 +119,33 @@ export class AComponent implements OnInit {
 
         }
       }
-      console.log('last one ' + lastOne);
-      console.log('last zero ' + lastZero);
+      //console.log('last one ' + lastOne);
+      //console.log('last zero ' + lastZero);
       if ((parseInt(lastOne.substr(11, 2)) === parseInt(lastZero.substr(11, 2))) && ((parseInt(lastOne.substr(14, 2)) >= parseInt(lastZero.substr(14, 2))))) {
-        let s = this.currentMinusLastDate("01/01/2018 24:00:00", lastOne);
+        let s = this.currentMinusLastDate("01/01/2018 24:00:00", lastOne); // if last status is 1 calculate time to next day and add it to runtime
         this.hoursMinutesAndSecondsCalc(s);
         this.runOrDownTimeSum('runtime');
 
       }
       else if ((parseInt(lastOne.substr(11, 2)) > parseInt(lastZero.substr(11, 2)))) {
-        let s = this.currentMinusLastDate("01/01/2018 24:00:00", lastOne);
+        let s = this.currentMinusLastDate("01/01/2018 24:00:00", lastOne); // if last status is 1 calculate time to next day and add it to runtime
         this.hoursMinutesAndSecondsCalc(s);
         this.runOrDownTimeSum('runtime');
       }
       else if ((parseInt(lastZero.substr(11, 2)) === parseInt(lastOne.substr(11, 2))) && ((parseInt(lastZero.substr(14, 2)) >= parseInt(lastOne.substr(14, 2))))) {
-        let s = this.currentMinusLastDate("01/01/2018 24:00:00", lastZero);
+        let s = this.currentMinusLastDate("01/01/2018 24:00:00", lastZero); // if last status is 0 calculate time to next day and add it to downtime
         this.hoursMinutesAndSecondsCalc(s);
         this.runOrDownTimeSum('downtime');
       }
       else if ((parseInt(lastZero.substr(11, 2)) > parseInt(lastOne.substr(11, 2)))) {
-        let s = this.currentMinusLastDate("01/01/2018 24:00:00", lastZero);
+        let s = this.currentMinusLastDate("01/01/2018 24:00:00", lastZero); // if last status is 0 calculate time to next day and add it to downtime
         this.hoursMinutesAndSecondsCalc(s);
         this.runOrDownTimeSum('downtime');
       }
 
     }
   }
-  hourScrapAndProductionSum(): void {//calculating gross production and scrap sum for each hour (A part 4)
+  hourScrapAndProductionSum(): void {//calculating gross production and scrap sum for each hour
     if (this.productionContent && (this.previousMachine !== this.machine || this.previousDate !== this.date)) {
       this.grossProductionArray = [];
       this.scrapProductionArray = [];
@@ -155,7 +153,7 @@ export class AComponent implements OnInit {
       for (let i = 0; i < 24; i++) {
         this.grossProductionArray[i] = 0;
         this.scrapProductionArray[i] = 0;
-        if (i < 10) {
+        if (i < 10) { //single digit hour
           for (let item of this.productionContent) {
             if (item.machine_name === this.machine && item.datetime_from.substr(0, 10) === this.date && (item.datetime_from.substr(11, 2)) === "0" + i) {
               if (item.variable_name === "PRODUCTION") {
@@ -167,7 +165,7 @@ export class AComponent implements OnInit {
             }
           }
         }
-        if (i >= 10) {
+        if (i >= 10) { //two digits hour
           for (let item of this.productionContent) {
             if (item.machine_name === this.machine && item.datetime_from.substr(0, 10) === this.date && parseInt(item.datetime_from.substr(11, 2)) === i) {
               if (item.variable_name === "PRODUCTION") {
@@ -181,15 +179,18 @@ export class AComponent implements OnInit {
         }
         this.totalProductionArray[i] = this.grossProductionArray[i] - this.scrapProductionArray[i]; //difference between gross production and scrap
       }
-      this.chart = this.createChart();
+      if(this.chart){ //destroying previous chart
+        this.chart.destroy();
+      }
+      this.chart = this.createChart(); 
     }
   }
-  createChart(): Chart { //creating chart of gross production - scrap for every hour (A part 4)
+  createChart(): Chart { //creating chart of gross production - scrap for every hour 
     if (this.previousMachine !== this.machine || this.previousDate !== this.date) {
       return (new Chart(this.chartRef.nativeElement, {
         type: 'line',
         data: {
-          labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+          labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
           datasets: [
             {
               data: this.totalProductionArray, //gross production - scrap for every hour
@@ -221,6 +222,7 @@ export class AComponent implements OnInit {
     this.grossPercentage = (((this.grossProduction - this.scrapProduction) / this.grossProduction) * 100).toFixed(2);
   }
   ngOnInit(): void {
+    this.arraysInit();
     this.getServiceData();
     setInterval(() => {
       this.getServiceData();
@@ -232,7 +234,6 @@ export class AComponent implements OnInit {
       this.previousMachine = this.machine;
       this.previousDate = this.date;
     }, 500)
-    this.arraysInit();
   }
 
 }
