@@ -26,6 +26,7 @@ export class BComponent implements OnInit {
     setInterval(()=>{
       this.machine=this.appService.getMachine();
       this.date=this.appService.getDate();
+      this.loadingFlag=false;
       if (this.productionContent){
         let coreIndex=0;
         this.coreInfo[0]={
@@ -83,7 +84,6 @@ export class BComponent implements OnInit {
           }
         }
         console.log(this.coreInfo);
-        this.loadingFlag=false;
       }
     },500)
     this.http.get<any>('https://building-blocks-assessment.herokuapp.com/Production').subscribe(data => {

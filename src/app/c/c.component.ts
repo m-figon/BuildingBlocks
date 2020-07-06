@@ -34,6 +34,7 @@ export class CComponent implements OnInit {
     setInterval(() => {
       this.machine = this.appService.getMachine();
       this.date = this.appService.getDate();
+      this.loadingFlag=false;
       if (this.productionContent && (this.previousMachine!==this.machine || this.previousDate!==this.date)) {
         this.production = 0;
         this.scrap = 0;
@@ -52,11 +53,14 @@ export class CComponent implements OnInit {
         this.runtime = 0;
         this.downtime = 0;
         let currentDate;
+        let lastOne;
+        let lastZero;
         let lastDate = "01/01/2018 00:00:00";
         for (let item of this.runtimeContent) {
           if (item.machine_name === this.machine && item.datetime.substr(0, 10) === this.date) {
             if (item.isrunning === "1") { 
               currentDate = "01/01/2018 " + item.datetime.substr(11,);
+              lastOne=currentDate;
               let now = moment(currentDate);
               let then = moment(lastDate);
               let ms = moment(now, "YYYY-MM-DD HH:mm:ss").diff(moment(then, "YYYY-MM-DD HH:mm:ss"));
@@ -77,6 +81,7 @@ export class CComponent implements OnInit {
             }
             if (item.isrunning === "0") {
               currentDate = "01/01/2018 " + item.datetime.substr(11,);
+              lastZero=currentDate;
               let now = moment(currentDate);
               let then = moment(lastDate);
               let ms = moment(now, "YYYY-MM-DD HH:mm:ss").diff(moment(then, "YYYY-MM-DD HH:mm:ss"));
@@ -97,6 +102,82 @@ export class CComponent implements OnInit {
 
           }
         }
+        console.log('last one ' + lastOne);
+        console.log('last zero ' + lastZero);
+        if ((parseInt(lastOne.substr(11, 2)) === parseInt(lastZero.substr(11, 2))) && ((parseInt(lastOne.substr(14, 2)) >= parseInt(lastZero.substr(14, 2))))) {
+          let ms = moment("01/01/2018 24:00:00", "YYYY-MM-DD HH:mm:ss").diff(moment(lastOne, "YYYY-MM-DD HH:mm:ss"));
+          let d = moment.duration(ms);
+          let s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+          console.log('1 ' + s);
+          let hours = s.substr(0, 1);
+          this.runtime += (60 * parseInt(hours));
+          let minutes = s.substr(2, 2);
+          if (parseInt(minutes) < 10) {
+            minutes = s.substr(3, 1);
+          }
+          let seconds = s.substr(5, 2);
+          if (parseInt(seconds) < 10) {
+            seconds = s.substr(6, 1);
+          }
+          this.runtime += (parseInt(seconds) / 60);
+          this.runtime += parseInt(minutes);
+
+        }
+        else if ((parseInt(lastOne.substr(11, 2)) > parseInt(lastZero.substr(11, 2)))) {
+          let ms = moment("01/01/2018 24:00:00", "YYYY-MM-DD HH:mm:ss").diff(moment(lastOne, "YYYY-MM-DD HH:mm:ss"));
+          let d = moment.duration(ms);
+          let s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+          console.log('2 ' + s);
+          let hours = s.substr(0, 1);
+          this.runtime += (60 * parseInt(hours));
+          let minutes = s.substr(2, 2);
+          if (parseInt(minutes) < 10) {
+            minutes = s.substr(3, 1);
+          }
+          let seconds = s.substr(5, 2);
+          if (parseInt(seconds) < 10) {
+            seconds = s.substr(6, 1);
+          }
+          this.runtime += (parseInt(seconds) / 60);
+          this.runtime += parseInt(minutes);
+        }
+        else if ((parseInt(lastZero.substr(11, 2)) === parseInt(lastOne.substr(11, 2))) && ((parseInt(lastZero.substr(14, 2)) >= parseInt(lastOne.substr(14, 2))))) {
+          let ms = moment("01/01/2018 24:00:00", "YYYY-MM-DD HH:mm:ss").diff(moment(lastZero, "YYYY-MM-DD HH:mm:ss"));
+          let d = moment.duration(ms);
+          let s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+          console.log('3 ' + s);
+          let hours = s.substr(0, 1);
+          this.downtime += (60 * parseInt(hours));
+          let minutes = s.substr(2, 2);
+          if (parseInt(minutes) < 10) {
+            minutes = s.substr(3, 1);
+          }
+          let seconds = s.substr(5, 2);
+          if (parseInt(seconds) < 10) {
+            seconds = s.substr(6, 1);
+          }
+          this.downtime += (parseInt(seconds) / 60);
+          this.downtime += parseInt(minutes);
+        }
+        else if ((parseInt(lastZero.substr(11, 2)) > parseInt(lastOne.substr(11, 2)))) {
+          let ms = moment("01/01/2018 24:00:00", "YYYY-MM-DD HH:mm:ss").diff(moment(lastZero, "YYYY-MM-DD HH:mm:ss"));
+          let d = moment.duration(ms);
+          let s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+          console.log('4 ' + s);
+          let hours = s.substr(0, 1);
+          this.downtime += (60 * parseInt(hours));
+          let minutes = s.substr(2, 2);
+          if (parseInt(minutes) < 10) {
+            minutes = s.substr(3, 1);
+          }
+          let seconds = s.substr(5, 2);
+          if (parseInt(seconds) < 10) {
+            seconds = s.substr(6, 1);
+          }
+          this.downtime += (parseInt(seconds) / 60);
+          this.downtime += parseInt(minutes);
+          this.downtime += parseInt(minutes);
+        }
         this.performance=(this.production*100/30000/24).toFixed(2);
         this.availability=((this.runtime*100/60)/((this.downtime+this.runtime)/60)/(0.75)).toFixed(2);
         this.quality=(((this.production-this.scrap)*100)/(this.production)).toFixed(2);
@@ -105,7 +186,6 @@ export class CComponent implements OnInit {
         console.log('downtime total ' + this.downtime);
         console.log('production total ' + this.production);
         console.log('scrap total ' + this.scrap);
-        this.loadingFlag=false;
 
       }
       this.previousMachine=this.machine;
