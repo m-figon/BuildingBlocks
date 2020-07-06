@@ -9,27 +9,28 @@ import { AppService } from '../app.service';
 })
 export class BComponent implements OnInit {
 
-  constructor(private http: HttpClient,private appService: AppService) { }
-  public machine:string;
-  public date:string;
-  public productionContent:any[];
-  public previousMachine:string="test";
-  public previousDate: string="test";
-  public coreInfo: any[]=[];
-  public boolValue=true;
-  public loadingFlag:boolean=true;
+  constructor(private http: HttpClient, private appService: AppService) { }
+  public machine: string;
+  public date: string;
+  public productionContent: any[];
+  public previousMachine: string = "test";
+  public previousDate: string = "test";
+  public coreInfo: any[] = [];
+  public boolValue = true;
+  public loadingFlag: boolean = true;
 
   //temperature
   ngOnInit(): void {
     this.machine = this.appService.getMachine();
     this.date = this.appService.getDate();
-    setInterval(()=>{
-      this.machine=this.appService.getMachine();
-      this.date=this.appService.getDate();
-      this.loadingFlag=false;
-      if (this.productionContent){
-        let coreIndex=0;
-        this.coreInfo[0]={
+    setInterval(() => {
+      this.machine = this.appService.getMachine();
+      this.date = this.appService.getDate();
+      this.loadingFlag = false;
+      this.coreInfo=[];
+      if (this.productionContent) {
+        let coreIndex = 0;
+        this.coreInfo[0] = {
           startTime: "00:00:00",
           endTime: "00:05:00",
           status: "good",
@@ -37,58 +38,64 @@ export class BComponent implements OnInit {
         };
         for (let item of this.productionContent) {
           if (item.variable_name === "CORE TEMPERATURE" && item.machine_name === this.machine && item.datetime_from.substr(0, 10) === this.date) {
-              if(item.value<=85){
-                if(this.coreInfo[coreIndex].status==="good"){
-                  this.coreInfo[coreIndex].endTime=item.datetime_to.substr(11,);
-                }
-                else if(this.coreInfo[coreIndex].status==="warning" || this.coreInfo[coreIndex].status==="fatal"){
+            console.log(item.datetime_from + "/" + item.datetime_to + "/" + item.value);
+            if (item.value <= 85) {
+              if (this.coreInfo[coreIndex].status === "good") {
+                this.coreInfo[coreIndex].endTime = item.datetime_to.substr(11,);
+                this.coreInfo[coreIndex].cores = 0;
+              }
+              else if (this.coreInfo[coreIndex].status === "warning" || this.coreInfo[coreIndex].status === "fatal") {
+                coreIndex++;
+                this.coreInfo[coreIndex] = {
+                  startTime: item.datetime_from.substr(11,),
+                  endTime: item.datetime_to.substr(11,),
+                  status: "good",
+                  cores: 0
+                };
+              }
+            } else if (item.value > 85 && item.value <= 100) {
+              if (this.coreInfo[coreIndex].status === "warning") {
+                this.coreInfo[coreIndex].endTime = item.datetime_to.substr(11,);
+              } else if (this.coreInfo[coreIndex].status === "good") {
+                if (this.coreInfo[coreIndex].cores >= 3) {
                   coreIndex++;
-                  this.coreInfo[coreIndex]={
-                    startTime: item.datetime_from.substr(11,),
-                    endTime: item.datetime_to.substr(11,),
-                    status: "good",
-                    cores: 0
-                  };
-                }
-              }else if(item.value>85 && item.value<=100){
-                if(this.coreInfo[coreIndex].status==="warning"){
-                  this.coreInfo[coreIndex].endTime=item.datetime_to.substr(11,);
-                }else if(this.coreInfo[coreIndex].status==="good"){
-                  this.coreInfo[coreIndex].cores++;
-                  if(this.coreInfo[coreIndex].cores>=3){
-                    coreIndex++;
-                  this.coreInfo[coreIndex]={
+                  this.coreInfo[coreIndex] = {
                     startTime: item.datetime_from.substr(11,),
                     endTime: item.datetime_to.substr(11,),
                     status: "warning",
                     cores: 0
                   };
-                  }
                 }
-              }else if(item.value>100){
-                if(this.coreInfo[coreIndex].status==="fatal"){
-                  this.coreInfo[coreIndex].endTime=item.datetime_to.substr(11,);
-                }else if(this.coreInfo[coreIndex].status==="warning"){
+                if (this.coreInfo[coreIndex].cores < 3) {
                   this.coreInfo[coreIndex].cores++;
-                  if(this.coreInfo[coreIndex].cores>=3){
-                    coreIndex++;
-                  this.coreInfo[coreIndex]={
-                    startTime: item.datetime_from.substr(11,),
-                    endTime: item.datetime_to.substr(11,),
-                    status: "fatal",
-                    cores: 0
-                  };
-                  }
+                  this.coreInfo[coreIndex].endTime = item.datetime_to.substr(11,);
                 }
+                
               }
+              else if (this.coreInfo[coreIndex].status === "fatal") {
+                this.coreInfo[coreIndex].endTime = item.datetime_to.substr(11,);
+              }
+            } else if (item.value > 100) {
+              if (this.coreInfo[coreIndex].status === "fatal") {
+                this.coreInfo[coreIndex].endTime = item.datetime_to.substr(11,);
+              } else if (this.coreInfo[coreIndex].status === "warning" || this.coreInfo[coreIndex].status === "good") {
+                coreIndex++;
+                this.coreInfo[coreIndex] = {
+                  startTime: item.datetime_from.substr(11,),
+                  endTime: item.datetime_to.substr(11,),
+                  status: "fatal",
+                  cores: 0
+                };
+              }
+            }
           }
         }
-        console.log(this.coreInfo);
+        //console.log(this.coreInfo);
       }
-    },500)
+    }, 500)
     this.http.get<any>('https://building-blocks-assessment.herokuapp.com/Production').subscribe(data => {
       this.productionContent = data.slice();
-      console.log(this.productionContent);
-  })
+      //console.log(this.productionContent);
+    })
   }
 }
