@@ -8,16 +8,16 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: '',
-    component: HomeComponent, // this is the component with the <router-outlet> in the template
+    component: HomeComponent,
   },
   { path: 'status',
-    component: AComponent, // this is the component with the <router-outlet> in the template
+    component: AComponent,
   },
   { path: 'core',
-    component: BComponent, // this is the component with the <router-outlet> in the template
+    component: BComponent,
   },
   { path: 'equipment',
-    component: CComponent, // this is the component with the <router-outlet> in the template
+    component: CComponent,
   }
 ];
 

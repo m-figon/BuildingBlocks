@@ -19,8 +19,8 @@ export class CComponent implements OnInit {
   private downtime: number = 0;
   private productionContent: any[];
   private runtimeContent: any[];
-  private previousMachine: string = "test";
-  private previousDate: string = "test";
+  private previousMachine: string = "none";
+  private previousDate: string = "none";
   public performance: string;
   public availability: string;
   public quality: string;
@@ -41,7 +41,7 @@ export class CComponent implements OnInit {
     this.machine = this.appService.getMachine();
     this.date = this.appService.getDate();
   }
-  scrapAndProductionSum(): void {//calculating gross production and scrap sum (A part 1,2)
+  scrapAndProductionSum(): void { //calculating gross production and scrap sum
     if (this.productionContent && (this.previousMachine !== this.machine || this.previousDate !== this.date)) {
       this.grossProduction = 0;
       this.scrapProduction = 0;
@@ -93,7 +93,6 @@ export class CComponent implements OnInit {
       this.downtime = 0;
       let currentDate: string, lastOne: string, lastZero: string;
       let lastDate: string = "01/01/2018 00:00:00";
-
       for (let item of this.runtimeContent) {
         if (item.machine_name === this.machine && item.datetime.substr(0, 10) === this.date) {
           if (item.isrunning === "1") {
@@ -112,7 +111,6 @@ export class CComponent implements OnInit {
             this.runOrDownTimeSum('runtime');
             lastDate = currentDate;
           }
-
         }
       }
       if ((parseInt(lastOne.substr(11, 2)) === parseInt(lastZero.substr(11, 2))) && ((parseInt(lastOne.substr(14, 2)) >= parseInt(lastZero.substr(14, 2))))) {
@@ -135,7 +133,6 @@ export class CComponent implements OnInit {
         this.hoursMinutesAndSecondsCalc(s);
         this.runOrDownTimeSum('downtime');
       }
-
     }
   }
   finalCalculations(): void { //calculations for displaying final data in table (with rounding to 2 decimal places)

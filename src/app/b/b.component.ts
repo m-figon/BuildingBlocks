@@ -13,8 +13,8 @@ export class BComponent implements OnInit {
   public machine: string;
   public date: string;
   private productionContent: any[];
-  private previousMachine: string = "test";
-  private previousDate: string = "test";
+  private previousMachine: string = "none";
+  private previousDate: string = "none";
   public coreInfo: any[] = [];
   public loadingFlag: boolean = true;
   getServiceData(): void { //getting info about selected machine and date
@@ -39,7 +39,7 @@ export class BComponent implements OnInit {
     if (this.productionContent) {
       let coreIndex: number = 0;
       this.newCoreObject(0, "00:00:00", "00:05:00", "good");
-      for (let item of this.productionContent) { //loop of every object from productionContent array
+      for (let item of this.productionContent) { //loop of every item of productionContent array
         if (item.variable_name === "CORE TEMPERATURE" && item.machine_name === this.machine && item.datetime_from.substr(0, 10) === this.date) {
           if (item.value <= 85) {
             if (this.coreInfo[coreIndex].status === "good") { //continue good status 
@@ -78,7 +78,6 @@ export class BComponent implements OnInit {
       }
     }
   }
-
   ngOnInit(): void {
     this.arraysInit();
     this.getServiceData();

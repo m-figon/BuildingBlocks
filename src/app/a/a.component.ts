@@ -4,7 +4,6 @@ import { AppService } from '../app.service';
 import * as moment from 'moment';
 import { Chart } from 'chart.js';
 
-
 @Component({
   selector: 'app-a',
   templateUrl: './a.component.html',
@@ -25,8 +24,8 @@ export class AComponent implements OnInit {
   private downtime: number = 0;
   private productionContent: any[];
   private runtimeContent: any[];
-  private previousMachine: string = "test";
-  private previousDate: string = "test";
+  private previousMachine: string = "none";
+  private previousDate: string = "none";
   public scrapPercentage: string;
   public grossPercentage: string;
   public downtimePercentage: string;
@@ -50,7 +49,7 @@ export class AComponent implements OnInit {
     if (this.productionContent && (this.previousMachine !== this.machine || this.previousDate !== this.date)) {
       this.grossProduction = 0;
       this.scrapProduction = 0;
-      for (let item of this.productionContent) { //loop of every object of productionContent array
+      for (let item of this.productionContent) { //loop of every item of productionContent array
         if (item.machine_name === this.machine && item.datetime_from.substr(0, 10) === this.date) {
           if (item.variable_name === "PRODUCTION") {
             this.grossProduction += parseInt(item.value);
@@ -221,7 +220,6 @@ export class AComponent implements OnInit {
           }
         }
       }));
-
     }
   }
   finalCalculations(): void { //calculations for displaying final data in table (with rounding to 2 decimal places)
@@ -243,5 +241,4 @@ export class AComponent implements OnInit {
       this.previousDate = this.date;
     }, 500)
   }
-
 }

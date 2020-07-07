@@ -16,11 +16,9 @@ export class AppService {
     }
   }
   getMachine():string{
-    console.log(this.machine);
     return this.machine;
   }
   getDate():string{
-    console.log(this.date);
     return this.date;
   }
 }

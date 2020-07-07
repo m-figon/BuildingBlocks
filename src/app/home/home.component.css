@@ -9,7 +9,7 @@
     align-items: center;
 }
 .home-text {
-    width: 30rem;
+    width: 32rem;
     height: 8rem;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 5px;
@@ -29,7 +29,7 @@
         background-size: cover;
     }
     .home-text {
-        width: 15rem;
+        width: 16rem;
         height: 11rem;
 }
 }

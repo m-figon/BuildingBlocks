@@ -1,10 +1,12 @@
 # Building Blocks Assessment
 
-This a front-end application using Angular, TypeScript, Moment.js, Chart.js
+-This a front-end application using Angular, TypeScript, Moment.js, Chart.js
 
-To filter data use selects in navigation bar
+-To filter data use selects in navigation bar
 
-To switch between urls click on one of three signs in top-right corner
+-To switch between urls click on one of three signs in top-right corner
+
+-Website is size adjustable
 
 ## back-end source code
 
