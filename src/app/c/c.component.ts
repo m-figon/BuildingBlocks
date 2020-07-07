@@ -91,7 +91,7 @@ export class CComponent implements OnInit {
     if (this.runtimeContent && (this.previousMachine !== this.machine || this.previousDate !== this.date)) {
       this.runtime = 0;
       this.downtime = 0;
-      let currentDate:string, lastOne:string, lastZero:string;
+      let currentDate: string, lastOne: string, lastZero: string;
       let lastDate: string = "01/01/2018 00:00:00";
 
       for (let item of this.runtimeContent) {
@@ -138,7 +138,7 @@ export class CComponent implements OnInit {
 
     }
   }
-  finalCalculations() { //calculations for displaying final data in table (with rounding to 2 decimal places)
+  finalCalculations(): void { //calculations for displaying final data in table (with rounding to 2 decimal places)
     this.performance = (this.grossProduction * 100 / 30000 / 24).toFixed(2);
     this.availability = ((this.runtime * 100 / 60) / ((this.downtime + this.runtime) / 60) / (0.75)).toFixed(2);
     this.quality = (((this.grossProduction - this.scrapProduction) * 100) / (this.grossProduction)).toFixed(2);

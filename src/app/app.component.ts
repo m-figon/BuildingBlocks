@@ -20,28 +20,29 @@ export class AppComponent implements OnInit {
   array(n: number, startFrom: number): number[] {
     return [...Array(n).keys()].map(i => i + startFrom);
   }
+  invertedArray(n: number, startFrom: number): number[] {
+    return [...Array(n).keys()].map(i => startFrom - i);
+  }
   ngOnInit(): void {
     this.http.get<any>('https://building-blocks-backend.herokuapp.com/Production').subscribe(data => {
       this.tmp = data.slice();
-      console.log(this.tmp);
       for(let item of this.tmp){
         let flag=true;
-        for(let elem of this.machineNames){
-          if(item.machine_name===elem){
+        for(let elem of this.machineNames){ 
+          if(item.machine_name===elem){ //check if machine name is already in array
             flag=false;
             break;
           }
         }
         if(flag){
-          this.machineNames.push(item.machine_name);
+          this.machineNames.push(item.machine_name); //add machine names from json file to machine select
         }
       }
       console.log(this.machineNames);
       this.machineFlag=true;
     })
   }
-
   searchFunc() {
-    this.appService.setSearch(this.machine, this.day, this.month, this.year);
+    this.appService.setSearch(this.machine, this.day, this.month, this.year); //set search values in service
   }
 }

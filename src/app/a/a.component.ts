@@ -81,7 +81,7 @@ export class AComponent implements OnInit {
       this.seconds = s.substr(6, 1);
     }
   }
-  runOrDownTimeSum(type:string):void { // add values to runtime or downtime
+  runOrDownTimeSum(type: string): void { // add values to runtime or downtime
     if (type === 'runtime') {
       this.runtime += (60 * parseInt(this.hours));
       this.runtime += parseInt(this.minutes);
@@ -96,7 +96,7 @@ export class AComponent implements OnInit {
     if (this.runtimeContent && (this.previousMachine !== this.machine || this.previousDate !== this.date)) {
       this.runtime = 0;
       this.downtime = 0;
-      let currentDate:string, lastOne:string, lastZero:string;
+      let currentDate: string, lastOne: string, lastZero: string;
       let lastDate: string = "01/01/2018 00:00:00";
       for (let item of this.runtimeContent) { //loop of every object of runtimeContent array
         if (item.machine_name === this.machine && item.datetime.substr(0, 10) === this.date) {
@@ -116,11 +116,8 @@ export class AComponent implements OnInit {
             this.runOrDownTimeSum('runtime');
             lastDate = currentDate;
           }
-
         }
       }
-      //console.log('last one ' + lastOne);
-      //console.log('last zero ' + lastZero);
       if ((parseInt(lastOne.substr(11, 2)) === parseInt(lastZero.substr(11, 2))) && ((parseInt(lastOne.substr(14, 2)) >= parseInt(lastZero.substr(14, 2))))) {
         let s = this.currentMinusLastDate("01/01/2018 24:00:00", lastOne); // if last status is 1 calculate time to next day and add it to runtime
         this.hoursMinutesAndSecondsCalc(s);
@@ -179,37 +176,48 @@ export class AComponent implements OnInit {
         }
         this.totalProductionArray[i] = this.grossProductionArray[i] - this.scrapProductionArray[i]; //difference between gross production and scrap
       }
-      if(this.chart){ //destroying previous chart
+      if (this.chart) { //destroying previous chart
         this.chart.destroy();
       }
-      this.chart = this.createChart(); 
+      this.chart = this.createChart();
     }
   }
   createChart(): Chart { //creating chart of gross production - scrap for every hour 
     if (this.previousMachine !== this.machine || this.previousDate !== this.date) {
       return (new Chart(this.chartRef.nativeElement, {
-        type: 'line',
+        type: 'bar',
         data: {
           labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
           datasets: [
             {
               data: this.totalProductionArray, //gross production - scrap for every hour
-              borderColor: '#82b8ff',
+              borderColor: '#5b6467',
+              backgroundColor: '#82b8ff',
               fill: false
             }
           ]
         },
         options: {
+          title: {
+            display: true,
+            text: 'Net production (gross production – scrap) for every hour'
+          },
           legend: {
             display: false
           },
           scales: {
             xAxes: [{
-              display: true
+              scaleLabel: {
+                display: true,
+                labelString: 'Hours'
+              }
             }],
             yAxes: [{
-              display: true
-            }],
+              scaleLabel: {
+                display: true,
+                labelString: 'Net production'
+              }
+            }]
           }
         }
       }));

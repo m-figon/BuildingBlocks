@@ -26,7 +26,7 @@ export class BComponent implements OnInit {
       this.productionContent = data.slice();
     })
   }
-  newCoreObject(index: number, start: string, end: string, stat: string) { //creating new core info status object
+  newCoreObject(index: number, start: string, end: string, stat: string): void { //creating new core info status object
     this.coreInfo[index] = {
       startTime: start,
       endTime: end,
@@ -38,7 +38,7 @@ export class BComponent implements OnInit {
     this.coreInfo = [];
     if (this.productionContent) {
       let coreIndex: number = 0;
-      this.newCoreObject(0,"00:00:00","00:05:00","good");
+      this.newCoreObject(0, "00:00:00", "00:05:00", "good");
       for (let item of this.productionContent) { //loop of every object from productionContent array
         if (item.variable_name === "CORE TEMPERATURE" && item.machine_name === this.machine && item.datetime_from.substr(0, 10) === this.date) {
           if (item.value <= 85) {

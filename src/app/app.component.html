@@ -55,7 +55,7 @@
       </select>
       <select (change)="searchFunc()" [(ngModel)]="year">
         <option value="">Year</option>
-        <ng-container *ngFor="let i of array(21, 2000)">
+        <ng-container *ngFor="let i of invertedArray(21, 2020)">
           <option value="{{i}}">{{i}}</option>
         </ng-container>
       </select>
